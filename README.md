@@ -7,4 +7,5 @@ TODO:
 5. Frontend world initialisation via eval seems bad idea;
 6. Scheduler updates all rooms one by one, all rooms must be updated in different threads;
 7. Bullets and weapons both front and back;
-8. Re-create character on falling of the screen;
+8. Recreate character on falling of the screen;
+9. Normal window resizing;
