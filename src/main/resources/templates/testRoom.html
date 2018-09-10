@@ -1,0 +1,60 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>rooms</title>
+
+    <script type="text/javascript" th:src="@{/js/engine/player.js}"></script>
+    <script type="text/javascript" th:src="@{/js/engine/controller.js}"></script>
+    <script type="text/javascript" th:src="@{/js/engine/room.js}"></script>
+    <script type="text/javascript" th:src="@{/js/engine/gun.js}"></script>
+
+    <script type="text/javascript" th:src="@{/js/engine/test.js}"></script>
+
+    <script type="text/javascript" th:src="@{/js/PreloadJS-0.6.2/lib/preloadjs-0.6.2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/EaselJS-0.8.2/lib/easeljs-0.8.2.min.js}"></script>
+
+    <style>
+        .buttons {
+            top: 20px;
+            position: relative;
+        }
+        #left {
+            height: 70px;
+            width: 33%;
+        }
+        #right {
+            height: 70px;
+            width: 33%;
+        }
+        #jump {
+            height: 70px;
+            width: 34%;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>
+        <a th:href="@{/}">main</a>
+    </h2>
+
+    <canvas id="canvas" width="1920" height="1080" oncontextmenu="return false;" onmousemove="logMouse(event)"></canvas>
+    <!--<div class="buttons">-->
+        <!--<button id="left"><&#45;&#45;&#45;&#45;</button><button id="jump">[____]</button><button id="right">&#45;&#45;&ndash;&gt;</button>-->
+    <!--</div>-->
+
+    <script th:inline="javascript">
+
+        // let logMouse = (e) => {};
+
+        let world = /*[[@{/img/bioms/desert/}]]*/ '';
+        let chars = /*[[@{/img/characters/}]]*/ '';
+        let guns = /*[[@{/img/guns/}]]*/ '';
+
+        console.log('world = ' + world);
+
+        test(world, chars, guns);
+    </script>
+</body>
+</html>

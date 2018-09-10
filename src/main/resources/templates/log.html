@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale-1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>log</title>
+</head>
+
+<body>
+    <h2>
+        <a th:href="@{/}">main</a>
+    </h2>
+
+    <br>[[${message}]]
+    <div th:if="${name}">
+        Logged as: [[${name}]]<br>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" value="submit" class="btn-link">logout</button>
+        </form>
+    </div>
+    <div th:unless="${name}">
+        <form th:action="@{/login}" method="post">
+            Name: <input type="text" name="name">[[${name}]]<br>
+            <button type="submit" value="submit" class="btn-link">login</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+00 - stoit
+01 - prizhok
+02 - beg
+03 - beg revers
