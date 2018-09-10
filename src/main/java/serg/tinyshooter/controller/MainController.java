@@ -71,7 +71,12 @@ public class MainController {
     public ModelAndView rooms() {
 
         ModelAndView page = new ModelAndView("rooms");
-        page.addObject("rooms", new ArrayList<>(Rooms.getRooms().keySet()));
+
+        ArrayList<String> rooms = new ArrayList<>();
+        for (Integer i : Rooms.getRooms().keySet()) {
+            rooms.add("/room/" + i);
+        }
+        page.addObject("rooms", rooms);
 
         return page;
     }

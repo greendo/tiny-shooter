@@ -10,9 +10,9 @@
         <a th:href="@{/}">main</a>
     </h2>
 
-    <ul th:each="attr : ${rooms}">
+    <ul th:each="r : ${rooms}">
         <li>
-            <a th:href="@{/room/}${attr}">room ${attr}</a>
+            <a th:href="${r}">room [[${r}]]</a>
         </li>
     </ul>
 </body>
