@@ -1,11 +1,10 @@
 TODO:
 
-1. Backend and front proper disconnect behavior;
-2. Render frontend optimisation (caching static background and platforms perhaps?);
-3. Fixing links and their logic in cabinet;
-4. Proper backend world creation;
-5. Frontend world initialisation via eval seems bad idea;
-6. Scheduler updates all rooms one by one, all rooms must be updated in different threads;
-7. Bullets and weapons both front and back;
-8. Recreate character on falling of the screen;
-9. Normal window resizing;
+1. Render frontend optimisation (caching static background and platforms perhaps?);
+2. Fixing links and their logic in cabinet;
+3. Proper backend world creation;
+4. Frontend world initialisation via eval seems bad idea;
+5. Scheduler updates all rooms one by one, all rooms must be updated in different threads;
+6. Bullets and weapons both front and back;
+7. Recreate character on falling of the screen;
+8. Normal window resizing;

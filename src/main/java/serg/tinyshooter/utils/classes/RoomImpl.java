@@ -73,7 +73,6 @@ public class RoomImpl implements Room, JSONable {
 
     @Override
     public String getInitScript() {
-
 //        StringBuilder sb = new StringBuilder("init.addRoom(\"" + biom + "\")");
         StringBuilder sb = new StringBuilder("init.addRoom()");
 
@@ -101,6 +100,8 @@ public class RoomImpl implements Room, JSONable {
         result.put("weapons", constructBigJSONArray(weapons));
         result.put("bullets", constructBigJSONArray(bullets));
 
+        deleteDisconnectedPlayers();
+
         return result;
     }
 
@@ -109,12 +110,28 @@ public class RoomImpl implements Room, JSONable {
         JSONArray result = new JSONArray();
 
         for (Map.Entry<?, ?> e : map.entrySet()) {
-//            String k = (String) e.getKey();
             JSONable v = (JSONable) e.getValue();
             result.put(v.toJSONObject());
         }
 
         return result;
+    }
+
+    private void deleteDisconnectedPlayers() {
+
+        List<String> dn = new ArrayList<>(players.size());
+
+        for (Map.Entry<String, Player> e : players.entrySet()) {
+            String n = e.getKey();
+            Player p = e.getValue();
+            if (p.delete()) {
+                dn.add(n);
+            }
+        }
+
+        for (int i = 0; i < dn.size(); i++) {
+            players.remove(dn.get(i));
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package serg.tinyshooter.utils.interfaces;
 
-import org.json.JSONObject;
 import serg.tinyshooter.messages.PlayerPOJO;
 
 /**
@@ -12,4 +11,5 @@ public interface Player extends JSONable {
     String getName();
     String getSprite();
     void update(PlayerPOJO p);
+    boolean delete();
 }

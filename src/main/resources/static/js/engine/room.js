@@ -96,6 +96,7 @@ class Room {
         this.objectsLoaded = false;
         for (let i = 0; i < this.playersArr.length; i++) {
             if (this.playersArr[i].name === name) {
+                this.playersContainer.removeChild(this.playersArr[i].sprite);
                 this.playersArr.splice(i, 1);
                 return true;
             }

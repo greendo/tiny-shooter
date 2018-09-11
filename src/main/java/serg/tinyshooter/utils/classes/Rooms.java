@@ -23,6 +23,10 @@ public class Rooms {
     }
 
     public static Room getRoom(Integer id) {
+        return rooms.get(id);
+    }
+
+    public static Map<Integer, Room> getRooms() {
 
         if (!rooms.containsKey(0)) {
             addRoom("desert");
@@ -34,10 +38,6 @@ public class Rooms {
             r.addPlatform(4, 10 * 128, 250);
         }
 
-        return rooms.get(id);
-    }
-
-    public static Map<Integer, Room> getRooms() {
         return rooms;
     }
 }

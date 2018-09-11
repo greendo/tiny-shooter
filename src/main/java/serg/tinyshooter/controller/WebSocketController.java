@@ -45,6 +45,7 @@ public class WebSocketController {
         pl.update(p);
     }
 
+    /** TODO: REDO THIS FOR ROOM=NEW THREAD */
     @Scheduled(fixedDelay = 30)
     private void updateAllClients() {
 
@@ -53,9 +54,9 @@ public class WebSocketController {
             room.update();
 
             String path = "/room/" + room.getId();
-            System.out.println("path: " + path);
             JSONObject j = room.toJSONObject();
-            System.out.println("roomJSON: " + j.toString());
+//            System.out.println("path: " + path);
+//            System.out.println("roomJSON: " + j.toString());
 
             try {
                 simpMessagingTemplate.convertAndSend(path, j.toString());

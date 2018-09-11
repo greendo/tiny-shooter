@@ -5,6 +5,7 @@ import serg.tinyshooter.messages.PlayerPOJO;
 import serg.tinyshooter.utils.interfaces.InteractableObj;
 import serg.tinyshooter.utils.interfaces.Player;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +16,16 @@ public class PlayerImpl implements Player, InteractableObj {
 
     private Map<String, Integer> values;
     private String state, name, sprite;
+    private Date lastUpdate;
+    private boolean delete;
 
     PlayerImpl(String name, String sprite) {
 
         values = new HashMap<>();
         this.name = name;
         this.sprite = sprite;
+        lastUpdate = new Date();
+        delete = false;
     }
 
     @Override
@@ -58,6 +63,13 @@ public class PlayerImpl implements Player, InteractableObj {
         values.put("y", p.getY());
         values.put("side", p.getSide());
         values.put("look", p.getLook());
+        lastUpdate = new Date();
+        delete = false;
+    }
+
+    @Override
+    public boolean delete() {
+        return delete;
     }
 
     @Override
@@ -68,6 +80,12 @@ public class PlayerImpl implements Player, InteractableObj {
         result.put("name", name);
         result.put("state", state);
         result.put("sprite", sprite);
+
+        long seconds = (new Date().getTime() - lastUpdate.getTime()) / 1000;
+        if (seconds > 5) {
+            result.put("delete", true);
+            delete = true;
+        }
 
         for (Map.Entry<String, Integer> e : values.entrySet()) {
             result.put(e.getKey(), e.getValue());
