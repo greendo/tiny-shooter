@@ -35,6 +35,14 @@ class Initialiser {
         return this.room.delPlayer(name);
     }
 
+    getWeapon(obj) {}
+
+    delWeapon(name) {}
+
+    getBullet(obj) {}
+
+    delBullet(name) {}
+
     addPlatform(tiles, index, x, y, callback) {
         this.room.platformsArr.push(
             new Platform(tiles, index, x, y, this.room, callback)
@@ -75,9 +83,7 @@ class WSClient {
                 let body = JSON.parse(message.body);
 
                 let players = body['players'];
-
-                let f = (obj) => {
-
+                let fp = (obj) => {
                     let p = t.init.getPlayer(obj);
                     if (obj['name'] === t.init.name) {
                         obj['x'] = undefined;
@@ -85,16 +91,19 @@ class WSClient {
                         obj['side'] = undefined;
                         obj['look'] = undefined;
                         obj['state'] = undefined;
+                        obj['mX'] = undefined;
+                        obj['mY'] = undefined;
                     }
                     p.update(obj);
                 };
-
                 for (let i = 0; i < players.length; i++) {
-                    f(players[i]);
+                    fp(players[i]);
                 }
 
-                let bullets = body['bullets'];
                 let weapons = body['weapons'];
+                let fw = (obj) => {};
+
+                let bullets = body['bullets'];
             });
 
             /** send message to create new player */

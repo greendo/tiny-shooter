@@ -132,10 +132,11 @@ class PlayerController {
         let f = (evt) => {
 
             if (this.player.x > evt.stageX && this.player.look > 0) {
-                this.player.update({look: -1});
+                this.player.update({look: -1, mX: evt.stageX, mY: evt.stageY});
             } else if (this.player.x < evt.stageX && this.player.look < 0) {
-                this.player.update({look: 1});
+                this.player.update({look: 1, mX: evt.stageX, mY: evt.stageY});
             }
+            this.player.update({mX: evt.stageX, mY: evt.stageY});
         };
 
         this.stage.on("stagemousemove", f);

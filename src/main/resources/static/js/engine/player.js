@@ -103,7 +103,8 @@ class Player {
                 side: this.side,
                 look: this.look,
                 x: this.x,
-                y: this.y
+                y: this.y,
+                fall: this.checkFallingBounds()
             }
         );
     }
@@ -122,11 +123,17 @@ class Player {
 
         try {
 
-            setProps(['health', 'x', 'y', 'side', 'look', 'score']);
+            setProps(['health', 'x', 'y', 'side', 'look', 'score', 'mX', 'mY']);
+
+            if (this.x > this.mX && this.look > 0) {
+                this.look = -1;
+            } else if (this.x < this.mX && this.look < 0) {
+                this.look = 1;
+            }
 
             this.sprite.x = this.x - this.look * this.getBounds().width / 2;
             this.sprite.y = this.y;
-            this.gun && this.gun.update();
+            this.gun && this.gun.update({mX: this.mx, mY: this.mY});
             this.sprite.scaleX = this.look;
 
             if (info.hasOwnProperty('state') && info.state !== this.state && info.state !== undefined) {
@@ -182,6 +189,10 @@ class Player {
             this.x > this.room.width ?
                 this.room.width :
                 this.x;
+    }
+
+    checkFallingBounds() {
+        return this.room.height < this.y;
     }
 
     setCoords(x, y) {
