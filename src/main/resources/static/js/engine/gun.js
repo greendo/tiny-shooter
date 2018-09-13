@@ -54,7 +54,11 @@ class Gun {
     }
 
     angle() {
-        return Math.atan2(this.mY - this.sprite.regY, this.mX - this.sprite.regX) * 180 / Math.PI;
+        let r = Math.atan2(
+            this.mY - (this.sprite.y + this.sprite.regY),
+            this.mX - (this.sprite.x + this.sprite.regX)
+        ) * 180 / Math.PI;
+        return this.sprite.scaleX === -1 ? r + 180 : r;
     }
 
     shoot() {}
