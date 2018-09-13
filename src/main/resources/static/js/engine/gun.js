@@ -16,8 +16,9 @@ class Gun {
             this.sprite.x = x;
             this.sprite.y = y;
             this.canBePicked = true;
-            this.sprite.regX = this.sprite.width / 2;
-            this.sprite.regY = this.sprite.height / 2;
+
+            this.sprite.regX = this.sprite.getBounds().width / 2;
+            this.sprite.regY = this.sprite.getBounds().height / 2;
         };
 
         preload.on('complete', handleCompleteLoad);
@@ -38,21 +39,22 @@ class Gun {
         let playerBounds = this.player.getBounds();
 
         this.sprite.scaleX = this.player.look;
+        /** pizda */
         this.sprite.x = this.player.x - this.sprite.scaleX * playerBounds.width / 2 +
-            playerBounds.width / 2 - this.sprite.getBounds().width / 2;
+            playerBounds.width / 2 - this.sprite.regX + this.sprite.scaleX * this.sprite.regX;
         this.sprite.y = this.player.y +
-            playerBounds.height / 2 + this.sprite.getBounds().height / 2;
+            playerBounds.height / 2 + this.sprite.regY * 2;
 
         try {
             this.mX = info['mX'];
             this.mY = info['mY'];
-            this.sprite.rotation = this.angle(this.sprite.regX, this.sprite.regY, this.mX, this.mY);
+            this.sprite.rotation = this.angle();
         } catch (e) {}
 
     }
 
-    angle(cx, cy, ex, ey) {
-        return 0;
+    angle() {
+        return Math.atan2(this.mY - this.sprite.regY, this.mX - this.sprite.regX) * 180 / Math.PI;
     }
 
     shoot() {}

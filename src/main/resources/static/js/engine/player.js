@@ -133,7 +133,7 @@ class Player {
 
             this.sprite.x = this.x - this.look * this.getBounds().width / 2;
             this.sprite.y = this.y;
-            this.gun && this.gun.update({mX: this.mx, mY: this.mY});
+            this.gun && this.gun.update({mX: this.mX, mY: this.mY});
             this.sprite.scaleX = this.look;
 
             if (info.hasOwnProperty('state') && info.state !== this.state && info.state !== undefined) {
