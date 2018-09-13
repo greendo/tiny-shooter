@@ -8,3 +8,5 @@ TODO:
 6. Bullets and weapons both front and back;
 7. Recreate character on falling of the screen;
 8. Normal window resizing;
+9. Unload resources on disconnect and delete, clear all event listeners for it;
+10. Redo player for container and nickname.

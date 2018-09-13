@@ -9,6 +9,7 @@ class Room {
 
         this.playersArr = [];
         this.platformsArr = [];
+        this.weaponsArr = [];
         this.biom = biom;
 
         this.stage = stage;
@@ -39,7 +40,7 @@ class Room {
                 this.controller.calculate();
                 this.stage.update();
 
-                this.wsclient.sendMessage(this.localPlayer.getInfo());
+                // this.wsclient.sendMessage(this.localPlayer.getInfo());
 
             } else this.checkIfLoaded();
         };
@@ -96,7 +97,9 @@ class Room {
         this.objectsLoaded = false;
         for (let i = 0; i < this.playersArr.length; i++) {
             if (this.playersArr[i].name === name) {
-                this.playersContainer.removeChild(this.playersArr[i].sprite);
+                this.playersArr[i].container.removeChild(this.playersArr[i].text);
+                this.playersArr[i].container.removeChild(this.playersArr[i].sprite);
+                this.playersContainer.removeChild(this.playersArr[i].container);
                 this.playersArr.splice(i, 1);
                 return true;
             }
@@ -146,10 +149,8 @@ class Platform {
         let handleCompleteLoad = () => {
 
             let addBlock = (i) => {
-
                 let image = preload.getResult('img_' + this.index + '_' + i);
                 this.platform[i] = new createjs.Bitmap(image);
-
                 this.room.platformsContainer.addChild(this.platform[i]);
             };
 

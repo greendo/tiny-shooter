@@ -55,8 +55,17 @@ class Player {
             };
 
             this.sprite = new createjs.Sprite(new createjs.SpriteSheet(obj), 0);
+            this.container = new createjs.Container();
             this.gotoAndPlay(this.state);
-            this.room.playersContainer.addChild(this.sprite);
+            this.text = new createjs.Text(name, "25px Arial", "#000000");
+            this.text.textBaseline = "alphabetic";
+            this.container.addChild(this.sprite);
+            this.container.addChild(this.text);
+            this.text.x = 0;
+            this.text.y = 0;
+            this.container.x = 0;
+            this.container.y = 0;
+            this.room.playersContainer.addChild(this.container);
 
             this.loaded = true;
 
@@ -127,12 +136,16 @@ class Player {
 
             if (this.x > this.mX && this.look > 0) {
                 this.look = -1;
+                this.text.x = -1 * this.getBounds().width;
+                console.log(look, this.getBounds().width, this.text.x);
             } else if (this.x < this.mX && this.look < 0) {
                 this.look = 1;
+                this.text.x = 0;
+                console.log(look, this.getBounds().width, this.text.x);
             }
 
-            this.sprite.x = this.x - this.look * this.getBounds().width / 2;
-            this.sprite.y = this.y;
+            this.container.x = this.x - this.look * this.getBounds().width / 2;
+            this.container.y = this.y;
             this.gun && this.gun.update({mX: this.mX, mY: this.mY});
             this.sprite.scaleX = this.look;
 
@@ -191,6 +204,7 @@ class Player {
                 this.x;
     }
 
+    /** SERVER HAS TO DECIDE TO RESPAWN PLAYER ON FALLING */
     checkFallingBounds() {
         return this.room.height < this.y;
     }
