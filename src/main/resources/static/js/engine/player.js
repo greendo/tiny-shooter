@@ -134,15 +134,15 @@ class Player {
 
             setProps(['health', 'x', 'y', 'side', 'look', 'score', 'mX', 'mY']);
 
-            if (this.x > this.mX && this.look > 0) {
+            if (this.x > this.mX) {
                 this.look = -1;
-                this.text.x = -1 * this.getBounds().width;
-                console.log(look, this.getBounds().width, this.text.x);
-            } else if (this.x < this.mX && this.look < 0) {
+                this.text.x = -98;
+            } else if (this.x < this.mX) {
                 this.look = 1;
                 this.text.x = 0;
-                console.log(look, this.getBounds().width, this.text.x);
             }
+
+            // this.text.x = 0;
 
             this.container.x = this.x - this.look * this.getBounds().width / 2;
             this.container.y = this.y;

@@ -40,7 +40,7 @@ class Room {
                 this.controller.calculate();
                 this.stage.update();
 
-                // this.wsclient.sendMessage(this.localPlayer.getInfo());
+                this.wsclient.sendMessage(this.localPlayer.getInfo());
 
             } else this.checkIfLoaded();
         };
