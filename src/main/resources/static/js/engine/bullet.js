@@ -1,35 +1,24 @@
 'use strict';
 
-export class Bullet extends createjs.Sprite {
+class Bullet {
 
-    constructor(id, sprite, x, y, angle, container) {
+    constructor(id, x, y, angle, room) {
 
-        let obj = {
-            framerate: 5,
-            images: sprite,
-            frames: {},
-            animations: {
-                static: [0, 0],
-                hit: [1, 3]
-            }
-        };
+        this.x = x;
+        this.y = y;
+        this.angle = angle;
+        this.room = room;
 
-        try {
-
-            super(new createjs.SpriteSheet(obj), 0);
-
-            this.id = id;
-            this.x = x;
-            this.y = y;
-            this.angle = angle;
-
-            this.gotoAndStop('static');
-
-            container.addChild(this);
-        } catch (e) {
-            alert(e);
-        }
+        this.line = new createjs.Shape();
+        this.line.graphics.moveTo(220,60).setStrokeStyle(1).beginStroke("#ff9900").lineTo(300,60);
+        //border #663d00
     }
+
+    // addToStage() {
+    //     let currentLineThickness = 5;
+    //     let g = new createjs.Graphics().ss(currentLineThickness,"round", "round").s("#000000").moveTo(midPoint.x, midPoint.y).curveTo(oldX, oldY, oldMidX, oldMidY);
+    //     this.room.stage.addChild(new createjs.Shape().set({graphics:g}));
+    // }
 
     update(info) {
 

@@ -176,7 +176,6 @@ class Player {
 
     platformHitTest(area) {
 
-        // let x00 = this.x;
         let y00 = this.y;
         let x01 = this.x;
         let y01 = this.getBounds().height + y00;
@@ -184,7 +183,6 @@ class Player {
         let x10 = area.getBounds().x;
         let y10 = area.getBounds().y;
         let x11 = area.getBounds().x + area.getBounds().width;
-        // let y11 = area.getBounds().y + area.getBounds().height;
 
         let checkPoint = (a0, a1, b) => {
             return(b >= a0 && b <= a1);

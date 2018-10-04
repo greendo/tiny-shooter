@@ -2,7 +2,7 @@
 
 class Room {
 
-    constructor(biom, stage, wsclient) {
+    constructor(biom, stage, wsclient = null) {
 
         this.width = 1920;
         this.height = 1080;
@@ -37,10 +37,14 @@ class Room {
         let tick = (e) => {
 
             if (this.objectsLoaded) {
-                this.controller.calculate();
+                try {
+                    this.controller.calculate();
+                } catch (e) {
+                    /** not loaded yet */
+                }
                 this.stage.update();
 
-                this.wsclient.sendMessage(this.localPlayer.getInfo());
+                this.wsclient && this.wsclient.sendMessage(this.localPlayer.getInfo());
 
             } else this.checkIfLoaded();
         };

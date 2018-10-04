@@ -10,7 +10,17 @@ let test = function (biomSpritesURL, playerSpritesURL, gunsSpritesURL) {
     let playersArr = [];
     let platformsArr = [];
 
-    window.room = new Room(biomSpritesURL, stage, playersArr, platformsArr);
+    window.room = new Room(biomSpritesURL, stage);
+
+    setTimeout(function () {
+        window.line = new createjs.Shape();
+        window.line.graphics.moveTo(20, 20).setStrokeStyle(5).beginStroke("#ff9900").lineTo(300, 60);
+        window.line.snapToPixel = true;
+        window.line.x = 55;
+        window.line.y = 55;
+        window.room.stage.addChild(window.line);
+        console.log('added line');
+    }, 1000);
 
     // platformsArr.push(
     //     new Platform(10, 0, 0, 1028 - 128, room, callback)
