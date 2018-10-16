@@ -2,44 +2,54 @@ let test = function (biomSpritesURL, playerSpritesURL, gunsSpritesURL) {
 
     let stage = new createjs.Stage('canvas');
 
-    // window.addEventListener('resize', function () {
-    //     stage.canvas.width = window.innerWidth;
-    //     stage.canvas.height = window.innerHeight;
-    // }, false);
 
     let playersArr = [];
     let platformsArr = [];
 
+    /** https://jsfiddle.net/k3rgk11e/2/ */
+    (createjs.Graphics.Polygon = function(x, y, points) {
+        this.x = x;
+        this.y = y;
+        this.points = points;
+    }).prototype.exec = function(ctx) {
+        // Start at the end to simplify loop
+        let end = this.points[this.points.length - 1];
+        ctx.moveTo(end.x, end.y);
+        this.points.forEach(function(point) {
+            ctx.lineTo(point.x, point.y);
+        });
+    };
+    createjs.Graphics.prototype.drawPolygon = function(x, y, args) {
+        let points = [];
+        if (Array.isArray(args)) {
+            args.forEach(function(point) {
+                point = Array.isArray(point) ? {x:point[0], y:point[1]} : point;
+                points.push(point);
+            });
+        } else {
+            args = Array.prototype.slice.call(arguments).slice(2);
+            let px = null;
+            args.forEach(function(val) {
+                if (px === null) {
+                    px = val;
+                } else {
+                    points.push({x: px, y: val});
+                    px = null;
+                }
+            });
+        }
+        return this.append(new createjs.Graphics.Polygon(x, y, points));
+    };
+
     window.room = new Room(biomSpritesURL, stage);
 
-    setTimeout(function () {
-        window.line = new createjs.Shape();
-        window.line.graphics.moveTo(20, 20).setStrokeStyle(5).beginStroke("#ff9900").lineTo(300, 60);
-        window.line.snapToPixel = true;
-        window.line.x = 55;
-        window.line.y = 55;
-        window.room.stage.addChild(window.line);
-        console.log('added line');
-    }, 1000);
+    window.poly = new createjs.Shape();
+    poly.graphics.beginFill('#ffff00').drawPolygon(0, 0, 0, 0, 150, 100, 100, 60);
+    poly.x = 10;
+    poly.y = 10;
+    window.room.stage.addChild(poly);
 
-    // platformsArr.push(
-    //     new Platform(10, 0, 0, 1028 - 128, room, callback)
-    // );
-    // platformsArr.push(
-    //     new Platform(4, 1, 10 * 128, 800, room, callback)
-    // );
-    // platformsArr.push(
-    //     new Platform(3, 2, 500, 650, room, callback)
-    // );
-    // platformsArr.push(
-    //     new Platform(2, 3, 700, 450, room, callback)
-    // );
-    // platformsArr.push(
-    //     new Platform(4, 4, 10 * 128, 250, room, callback)
-    // );
-    // platformsArr.push(
-    //     new Platform(4, 4, 10 * 128, 250, room, callback)
-    // );
+
 
     let addPlatform = (tiles, index, x, y, callback) => {
         platformsArr.push(
@@ -55,34 +65,6 @@ let test = function (biomSpritesURL, playerSpritesURL, gunsSpritesURL) {
 
         let controller = new PlayerController(player1, stage, platformsArr);
         room.start(controller);
-
-        // document.getElementById("left").onmousedown = function() {
-        //     controller.pressA();
-        // };
-        // document.getElementById("left").ontouchstart = function() {
-        //     controller.pressA();
-        // };
-        // document.getElementById("left").onmouseup = function() {
-        //     controller.releaseA();
-        // };
-        // document.getElementById("left").ontouchend = function() {
-        //     controller.releaseA();
-        // };
-        // document.getElementById("right").onmousedown = function() {
-        //     controller.pressD();
-        // };
-        // document.getElementById("right").ontouchstart = function() {
-        //     controller.pressD();
-        // };
-        // document.getElementById("right").onmouseup = function() {
-        //     controller.releaseD();
-        // };
-        // document.getElementById("right").ontouchend = function() {
-        //     controller.releaseD();
-        // };
-        // document.getElementById("jump").onclick = function() {
-        //     controller.pressSpace();
-        // };
     };
 
     addPlayer(
@@ -99,5 +81,5 @@ let test = function (biomSpritesURL, playerSpritesURL, gunsSpritesURL) {
         )
     );
 
-    window.gun = new Gun(gunsSpritesURL + 'shotgun', 0, 0, room);
+    window.gun = new Gun(gunsSpritesURL + 'shotgun.png', 0, 0, room, 0);
 };

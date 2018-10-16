@@ -10,8 +10,11 @@ class Bullet {
         this.room = room;
 
         this.line = new createjs.Shape();
-        this.line.graphics.moveTo(220,60).setStrokeStyle(1).beginStroke("#ff9900").lineTo(300,60);
-        //border #663d00
+        this.room.stage.addChild(this.line);
+        this.line.graphics.setStrokeStyle(1).beginStroke('#ffffcc');//#ff9900#ffff00
+        this.line.graphics.moveTo(120, 305);
+        this.line.graphics.lineTo(280, 305);
+        this.line.graphics.endStroke();
     }
 
     // addToStage() {

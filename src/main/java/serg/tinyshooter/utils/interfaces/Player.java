@@ -8,7 +8,6 @@ import serg.tinyshooter.messages.PlayerPOJO;
 public interface Player extends JSONable {
 
     void spawn(int coordX, int coordY);
-    String getName();
     String getSprite();
     void update(PlayerPOJO p);
     boolean delete();

@@ -2,11 +2,11 @@
 
 class Gun {
 
-    constructor(name, x, y, room) {
+    constructor(spriteName, x, y, room, name) {
 
         let preload = new createjs.LoadQueue();
 
-        preload.loadFile({id: name, src: name + '.png'});
+        preload.loadFile({id: name, src: spriteName});
 
         let handleCompleteLoad = () => {
 
@@ -61,9 +61,22 @@ class Gun {
         return this.sprite.scaleX === -1 ? r + 180 : r;
     }
 
-    shoot() {}
+    shoot() {
+
+    }
 
     dispose() {}
+}
+
+class Shotgun extends Gun {
+
+    constructor(spriteName, x, y, room, name) {
+        super(spriteName, x, y, room, name);
+
+        this.bullets = 3;
+        this.cooldown = 30;
+        this.rounds = 12;
+    }
 }
 
 //window.gun.pickUp(window.p);

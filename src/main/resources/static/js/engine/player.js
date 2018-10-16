@@ -161,6 +161,7 @@ class Player {
             }
 
             if (info.hasOwnProperty('delete')) {
+                this.gun && this.room.delWeapon(this.gun.name);
                 this.room.delPlayer(this.name);
             }
         } catch (e) {/** not loaded yet? */}

@@ -5,10 +5,45 @@ class Initialiser {
     constructor(biomSpritesURL, playerSpritesURL, gunsSpritesURL, name, roomId) {
         this.biomSpritesURL = biomSpritesURL;
         this.playerSpritesURL = playerSpritesURL;
-        this.gunsSpritesURL = gunsSpritesURL;
+        this.gunSpritesURL = gunsSpritesURL;
         this.name = name;
         this.roomId = roomId;
         this.wsclient = new WSClient(this);
+
+        /** https://jsfiddle.net/k3rgk11e/2/ */
+        (createjs.Graphics.Polygon = function(x, y, points) {
+            this.x = x;
+            this.y = y;
+            this.points = points;
+        }).prototype.exec = function(ctx) {
+            // Start at the end to simplify loop
+            var end = this.points[this.points.length - 1];
+            ctx.moveTo(end.x, end.y);
+            this.points.forEach(function(point) {
+                ctx.lineTo(point.x, point.y);
+            });
+        };
+        createjs.Graphics.prototype.drawPolygon = function(x, y, args) {
+            var points = [];
+            if (Array.isArray(args)) {
+                args.forEach(function(point) {
+                    point = Array.isArray(point) ? {x:point[0], y:point[1]} : point;
+                    points.push(point);
+                });
+            } else {
+                args = Array.prototype.slice.call(arguments).slice(2);
+                var px = null;
+                args.forEach(function(val) {
+                    if (px === null) {
+                        px = val;
+                    } else {
+                        points.push({x: px, y: val});
+                        px = null;
+                    }
+                });
+            }
+            return this.append(new createjs.Graphics.Polygon(x, y, points));
+        };
     }
 
     connect() {
@@ -35,7 +70,9 @@ class Initialiser {
         return this.room.delPlayer(name);
     }
 
-    getWeapon(obj) {}
+    getWeapon(obj) {
+        return this.room.getPlayer(obj.name, this.gunSpritesURL + obj.sprite, obj.x, obj.y);
+    }
 
     delWeapon(name) {}
 
@@ -101,9 +138,24 @@ class WSClient {
                 }
 
                 let weapons = body['weapons'];
-                let fw = (obj) => {};
+                let fw = (obj) => {
+                    let w = t.init.getWeapon(obj);
+                    if (obj['playerName']) {
+                        //TODO: here may be problems
+                        let p = t.init.getPlayer({name: obj['playerName']});
+                        if (p.gun === null) {
+                            w.pickUp(p);
+                        }
+                    }
+                };
+                for (let i = 0; i < weapons.length; i++) {
+                    fw(weapons[i]);
+                }
 
                 let bullets = body['bullets'];
+                let fb = (obj) => {
+                    //TODO: BULLET UPDATE LOGIC
+                }
             });
 
             /** send message to create new player */

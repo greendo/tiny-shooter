@@ -10,12 +10,14 @@ class Room {
         this.playersArr = [];
         this.platformsArr = [];
         this.weaponsArr = [];
+        this.bulletsArr = [];
         this.biom = biom;
 
         this.stage = stage;
         this.platformsContainer = new createjs.Container();
         this.playersContainer = new createjs.Container();
         this.weaponsContainer = new createjs.Container();
+        this.bulletsContainer = new createjs.Container();
 
         this.back = new createjs.Bitmap(biom + 'back.png');
 
@@ -25,6 +27,7 @@ class Room {
         stage.addChild(this.platformsContainer);
         stage.addChild(this.playersContainer);
         stage.addChild(this.weaponsContainer);
+        stage.addChild(this.bulletsContainer);
         this.stage.update();
 
         this.wsclient = wsclient;
@@ -110,6 +113,42 @@ class Room {
         }
         return false;
     }
+
+    getWeapon(name, spriteName, x, y) {
+
+        for (let i = 0; i < this.weaponsArr.length; i++) {
+            if (this.weaponsArr[i].name === name) {
+                return this.weaponsArr[i];
+            }
+        }
+
+        this.objectsLoaded = false;
+        let weapon = null;
+        switch (spriteName) {
+            case 'shotgun':
+                weapon = new Shotgun(spriteName + '.png', x, y, this, name);
+                break;
+        }
+        this.weaponsArr.push(weapon);
+
+        console.log('added weapon ' + name);
+        return weapon;
+    }
+
+    delWeapon(name) {
+        this.objectsLoaded = false;
+        for (let i = 0; i < this.weaponsArr.length; i++) {
+            if (this.weaponsArr[i].name === name) {
+                this.weaponsContainer.removeChild(this.playersArr[i].sprite);
+                this.weaponsArr.splice(i, 1);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    getBullet() {}
+    delBullet() {}
 }
 
 class Platform {

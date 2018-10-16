@@ -17,18 +17,18 @@ public class RoomImpl implements Room, JSONable {
     private Integer id;
     private String biom;
     private List<Platform> platforms;
-    private Map<String, Bullet> bullets;
     private Map<String, Player> players;
-    private Map<String, Weapon> weapons;
+    private List<Bullet> bullets;
+    private List<Weapon> weapons;
 
     RoomImpl(Integer id, String biom) {
 
         this.id = id;
         this.biom = biom;
         platforms = new ArrayList<>();
-        bullets = new HashMap<>();
         players = new HashMap<>();
-        weapons = new HashMap<>();
+        bullets = new ArrayList<>();
+        weapons = new ArrayList<>();
     }
 
     private void calcPlayer2Player() {}
@@ -112,6 +112,20 @@ public class RoomImpl implements Room, JSONable {
         for (Map.Entry<?, ?> e : map.entrySet()) {
             JSONable v = (JSONable) e.getValue();
             result.put(v.toJSONObject());
+        }
+
+        return result;
+    }
+
+    private JSONArray constructBigJSONArray(List<?> list)  throws ClassCastException {
+
+        JSONArray result = new JSONArray();
+
+        for (int i = 0; i < list.size(); i++) {
+            JSONable j = (JSONable) list.get(i);
+            JSONObject jo = j.toJSONObject();
+            jo.put("name", i);
+            result.put(jo);
         }
 
         return result;

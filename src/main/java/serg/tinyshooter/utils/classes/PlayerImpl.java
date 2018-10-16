@@ -46,11 +46,6 @@ public class PlayerImpl implements Player, InteractableObj {
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
     public String getSprite() {
         return sprite;
     }
