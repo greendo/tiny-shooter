@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by jc on 16.01.18.
  */
-public class PlayerImpl implements Player, InteractableObj {
+public class PlayerImpl implements Player {
 
     private Map<String, Integer> values;
     private String state, name, sprite;
@@ -65,6 +65,11 @@ public class PlayerImpl implements Player, InteractableObj {
     @Override
     public boolean delete() {
         return delete;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override

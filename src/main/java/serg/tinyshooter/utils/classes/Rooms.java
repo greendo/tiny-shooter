@@ -31,11 +31,13 @@ public class Rooms {
         if (!rooms.containsKey(0)) {
             addRoom("desert");
             Room r = getRoom(0);
-            r.addPlatform(10, 0, 900);
-            r.addPlatform(4, 1280, 800);
-            r.addPlatform(3, 500, 650);
-            r.addPlatform(2, 700, 450);
-            r.addPlatform(4, 10 * 128, 250);
+
+            r.addPlatform(15, 0, 900);
+            r.addPlatform(4, 11 * 128, 670);
+            r.addPlatform(4, 0, 670);
+            r.addPlatform(5, (5 * 128), 440);
+            r.addPlatform(4, 0, 210);
+            r.addPlatform(4, 11 * 128, 210);
         }
 
         return rooms;

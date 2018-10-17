@@ -68,12 +68,12 @@ let test = function (biomSpritesURL, playerSpritesURL, gunsSpritesURL) {
     };
 
     addPlayer(
-        addPlatform(4, 5, 10 * 128, 250,
-            addPlatform(4, 4, 10 * 128, 250,
-                addPlatform(2, 3, 700, 450,
-                    addPlatform(3, 2, 500, 650,
-                        addPlatform(5, 1, 10 * 128, 800,
-                            addPlatform(10, 0, 0, 900)
+        addPlatform(4, 5, 11 * 128, 210,
+            addPlatform(4, 4, 0, 210,
+                addPlatform(5, 3, (5 * 128), 440,
+                    addPlatform(4, 2, 0, 670,
+                        addPlatform(4, 1, 11 * 128, 670,
+                            addPlatform(15, 0, 0, 900)
                         )
                     )
                 )

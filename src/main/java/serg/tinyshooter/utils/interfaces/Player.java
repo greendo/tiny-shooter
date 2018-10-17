@@ -5,10 +5,11 @@ import serg.tinyshooter.messages.PlayerPOJO;
 /**
  * Created by jc on 22.03.17.
  */
-public interface Player extends JSONable {
+public interface Player extends JSONable, InteractableObj {
 
     void spawn(int coordX, int coordY);
     String getSprite();
     void update(PlayerPOJO p);
     boolean delete();
+    String getName();
 }

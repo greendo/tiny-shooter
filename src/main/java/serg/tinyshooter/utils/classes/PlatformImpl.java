@@ -8,7 +8,7 @@ import serg.tinyshooter.utils.interfaces.Platform;
  */
 public class PlatformImpl implements Platform {
 
-    int tilesCount, x, y;
+    private int tilesCount, x, y;
 
     PlatformImpl(int tilesCount, int x, int y) {
 

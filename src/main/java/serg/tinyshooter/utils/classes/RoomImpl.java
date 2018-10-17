@@ -4,10 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import serg.tinyshooter.utils.interfaces.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by jc on 08.02.18.
@@ -20,6 +17,8 @@ public class RoomImpl implements Room, JSONable {
     private Map<String, Player> players;
     private List<Bullet> bullets;
     private List<Weapon> weapons;
+    private static final double WEAPON_SPAWN_DELAY = 3000;
+    private Date lastWeaponSpawnDate;
 
     RoomImpl(Integer id, String biom) {
 
@@ -32,12 +31,46 @@ public class RoomImpl implements Room, JSONable {
     }
 
     private void calcPlayer2Player() {}
+
     private void calcPlayer2Bullet() {}
+
     private void calcBullet2Terrain() {}
+
+    private void calcPlayer2Weapon() {
+
+        /** ArrayList iteration works faster with indexed loops */
+        for (int i = 0; i < weapons.size(); i++) {
+            for (Map.Entry<String, Player> entry : players.entrySet()) {
+                Player p = entry.getValue();
+                Weapon w = weapons.get(i);
+
+                if (w.getPlayer() != null) {
+                    w.setPlayer(p);
+                }
+            }
+        }
+    }
 
     @Override
     public void update() {
+        //TODO: SPAWN WEAPONS, RESPAWN PLAYERS, CHECK COLLISION BETWEEN PLAYERS, WEAPONS AND BULLETS
+        calcPlayer2Weapon();
 
+        if (weapons.size() < 4) {
+            spawnWeapon();
+        }
+    }
+
+    @Override
+    public void spawnWeapon() {
+        Date tmp = new Date();
+        if (lastWeaponSpawnDate == null
+        || tmp.getTime() - lastWeaponSpawnDate.getTime() >= WEAPON_SPAWN_DELAY) {
+            //TODO: SPAWN GUNS AT DIFFERENT POINTS
+//            Weapon w = new WeaponImpl();
+//            weapons.add(w);
+//            lastWeaponSpawnDate = new Date();
+        }
     }
 
     @Override
