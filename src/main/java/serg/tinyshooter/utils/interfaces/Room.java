@@ -14,5 +14,6 @@ public interface Room extends ScriptInitable, JSONable {
     void initBullet(String playerName, int x0, int y0, int x1, int y1);
     Integer getId();
     String getBiom();
-    void spawnWeapon();
+    void addPlayerSpawn(int x, int y);
+    void addWeaponSpawn(int x, int y);
 }

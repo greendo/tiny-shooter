@@ -19,8 +19,10 @@ public class RoomImpl implements Room, JSONable {
     private List<Weapon> weapons;
     private static final double WEAPON_SPAWN_DELAY = 3000;
     private Date lastWeaponSpawnDate;
+    private List<SpawnPoint> playerSpawns;
+    private List<SpawnPoint> weaponSpawns;
 
-    RoomImpl(Integer id, String biom) {
+    public RoomImpl(Integer id, String biom) {
 
         this.id = id;
         this.biom = biom;
@@ -28,6 +30,8 @@ public class RoomImpl implements Room, JSONable {
         players = new HashMap<>();
         bullets = new ArrayList<>();
         weapons = new ArrayList<>();
+        playerSpawns = new ArrayList<>();
+        weaponSpawns = new ArrayList<>();
     }
 
     private void calcPlayer2Player() {}
@@ -53,24 +57,42 @@ public class RoomImpl implements Room, JSONable {
 
     @Override
     public void update() {
-        //TODO: SPAWN WEAPONS, RESPAWN PLAYERS, CHECK COLLISION BETWEEN PLAYERS, WEAPONS AND BULLETS
+        //TODO: RESPAWN PLAYERS, CHECK COLLISION BETWEEN PLAYERS, WEAPONS AND BULLETS
         calcPlayer2Weapon();
 
-        if (weapons.size() < 4) {
-            spawnWeapon();
+        SpawnPoint sp = getVacantWeaponSpawnPoint();
+        if (sp != null && spawnWeaponCooldown()) {
+            //TODO: CHANGE WEAPON TYPE HERE
+            Weapon w = new WeaponImpl("shotgun", sp.getX(), sp.getY());
+            sp.setSpawned(w);
+            weapons.add(w);
+            lastWeaponSpawnDate = new Date();
         }
     }
 
-    @Override
-    public void spawnWeapon() {
-        Date tmp = new Date();
-        if (lastWeaponSpawnDate == null
-        || tmp.getTime() - lastWeaponSpawnDate.getTime() >= WEAPON_SPAWN_DELAY) {
-            //TODO: SPAWN GUNS AT DIFFERENT POINTS
-//            Weapon w = new WeaponImpl();
-//            weapons.add(w);
-//            lastWeaponSpawnDate = new Date();
+    private SpawnPoint getVacantWeaponSpawnPoint() {
+        for (int i = 0; i < weaponSpawns.size(); i++) {
+            if (weaponSpawns.get(i).getSpawned() == null) {
+                return weaponSpawns.get(i);
+            }
         }
+        return null;
+    }
+
+    private boolean spawnWeaponCooldown() {
+        Date tmp = new Date();
+        return lastWeaponSpawnDate == null
+                || tmp.getTime() - lastWeaponSpawnDate.getTime() >= WEAPON_SPAWN_DELAY;
+    }
+
+    @Override
+    public void addPlayerSpawn(int x, int y) {
+        playerSpawns.add(new SpawnPointPlayer(x, y));
+    }
+
+    @Override
+    public void addWeaponSpawn(int x, int y) {
+        weaponSpawns.add(new SpawnPointWeapon(x, y));
     }
 
     @Override
